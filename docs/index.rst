@@ -3,13 +3,11 @@
 Documentation for ZIMZAP
 ===================================
 
-**Lumache** (/lu'make/) is a Python library for cooks and food lovers
-that creates recipes mixing random ingredients.
-It pulls data from the `Open Food Facts database <https://world.openfoodfacts.org/>`_
-and offers a *simple* and *intuitive* API.
+.. `Open Food Facts database <https://world.openfoodfacts.org/>`_
 
-Check out the :doc:`usage` section for further information, including
-how to :ref:`installation` the project.
+This is a references to the :doc:`Installation` section of the documentation.
+
+This is a reference to a :ref:`target` in another section of the documentation.
 
 .. note::
 
