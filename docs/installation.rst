@@ -1,9 +1,10 @@
 Installation
 ============
 
+.. _subsection1:
+
 Subsection 1
 ------------
-.. _target:
 
 Subsection 2
 ------------

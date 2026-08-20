@@ -7,7 +7,7 @@ Documentation for ZIMZAP
 
 This is a references to the :doc:`installation` section of the documentation.
 
-This is a reference to a :ref:`target` in another section of the documentation.
+This is a reference to :ref:`subsection1` in another section of the documentation.
 
 .. note::
 
