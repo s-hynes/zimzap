@@ -8,9 +8,9 @@ used with this pipeline.
 
 @author: Cjmul
 """
-from step_01_double_phase_mode import double_phase_mode
-from step_02_bias_subtraction import overscan
-from step_03_separating_rows import separate_rows
+from .step_01_double_phase_mode import double_phase_mode
+from .step_02_bias_subtraction import overscan
+from .step_03_separating_rows import separate_rows
 from astropy.io import fits
 import numpy as np
 import os
