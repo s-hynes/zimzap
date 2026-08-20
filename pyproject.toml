@@ -1,0 +1,28 @@
+[build-system]
+requires = ["hatchling >= 1.26"]
+build-backend = "hatchling.build"
+
+[project]
+name = "zimzap"
+version = "0.0.1"
+authors = [
+  { name="Stephen Hynes", email="Stephen.Hynes@proton.me" },
+]
+description = """A data reduction pipeline for creating high contrast images \
+of planet-forming disks at optical wavelengths using raw data from the ZIMPOL \
+polarimeter within SPHERE."""
+readme = "README.rst"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+license = "GPL-3.0-or-later"
+license-files = ["LICEN[CS]E*"]
+
+[project.urls]
+Homepage = "https://github.com/s-hynes/zimzap"
+Issues = "https://github.com/s-hynes/zimzap/issues"
+
+[project.scripts]
+zimzap = "zimzap.__main__:main"

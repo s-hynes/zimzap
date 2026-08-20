@@ -1,5 +1,5 @@
 tests/
 .vscode/
 dist/
-pyproject.toml
+#pyproject.toml
 __pycache__/
