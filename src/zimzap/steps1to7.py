@@ -12,7 +12,7 @@ import datetime as dt
 from .inputs import save_fits, save_steps, saving_dir, dir_in_str
 import time
 
-def steps1to7(data_dir:str, file:str, save_dir:str, detector:str, Stokes, first_cycle:bool
+def steps1to7(data_dir:str, file:str, save_dir:str, detector:str, Stokes, first_cycle:bool,
               savesteps=False, time_and_log=False): 
     """Performs steps 1 to 7 in the data reduction.""" 
 
