@@ -49,7 +49,6 @@ def file_copying_fiddle(stokes_par:str):
 
 def run_pipeline():
 
-
     working_dir = os.getcwd()
     raw_data_dir = os.path.join(working_dir, "raw")
     config_file_path = os.path.join(working_dir, "config.conf")
@@ -63,7 +62,6 @@ def run_pipeline():
     check_directories()
     file_copy_path = file_copying_fiddle("Qplus")
 
-    make_config(working_dir)
     perform_preprocessing, \
     sigma_filtering, \
     object_collapse_ndit, \
@@ -103,8 +101,9 @@ def run_pipeline():
 
 def main():
 
+    working_dir = os.getcwd()
     # String variable for whatever name I decide to give the pipeline
-    PROGRAM_NAME = "Pipeline"
+    PROGRAM_NAME = "Zimzap"
     # Name of example system, if we want to have a demo dataset like IRDAP has
     # e.g. in IRDAP's case, the example system is the circumstellar disk of T Cha
     EXAMPLE_SYSTEM = "Example_system"
@@ -146,6 +145,9 @@ def main():
 
     if args.run:
         run_pipeline()
+
+    if args.makeconfig:
+        make_config(working_dir)
 
 if __name__ == "__main__":
     main()
