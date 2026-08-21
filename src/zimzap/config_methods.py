@@ -18,17 +18,19 @@ def make_config(main_dir_path):
         overwrite = input(f"\nThe configuration file {writing_config_file_path}"
                           +" already exists. Would you like to overwite it? (y/n) ")
         if overwrite == "n":
-            print("\nNo new configuration file was created.")
+            print("\nNo new configuration file was created.\n")
         elif overwrite != "y":
             print(f"\nThe provided input \"{str(overwrite)}\" is not valid.")
+            """I'd like to have a way here of reprompting the user if they
+            provide an invalid input, or just not overwriting the config """
         
     if not os.path.exists(writing_config_file_path):
         shutil.copyfile(default_config_file_path, writing_config_file_path)
-        print(f"\nCreated a default configuration file {writing_config_file_path}.")
+        print(f"\nCreated a default configuration file {writing_config_file_path}.\n")
     elif overwrite == "y":
         shutil.copyfile(default_config_file_path, writing_config_file_path)
         print("\nExisting configuration file has been overwritten with a new"\
-              f" copy of the default configuration file, {writing_config_file_path}.")
+              f" copy of the default configuration file, {writing_config_file_path}.\n")
 
 def read_config_file(path_config_file):
     '''
@@ -120,6 +122,7 @@ def read_config_file(path_config_file):
         combination_method_intensity    = config_float_int(config.get('Advanced PDI options', 'combination_method_intensity'))
     except:
         combination_method_intensity    = 'mean'
+    centre_one_cycle  = config_true_false(config.get('Advanced PDI options', 'centre_one_cycle'))
 
     return perform_preprocessing, \
            sigma_filtering, \
@@ -145,7 +148,8 @@ def read_config_file(path_config_file):
            double_difference_type, \
            single_posang_north_up, \
            combination_method_polarization, \
-           combination_method_intensity
+           combination_method_intensity, \
+           centre_one_cycle
 
 if __name__ == "__main__":
     make_config(os.getcwd())
