@@ -4,6 +4,7 @@ using a Gaussian fit also removes the dither. I will retain the code for
 the time being (18/06/2026)."""
 from astropy.io import fits
 import scipy.ndimage 
+import numpy as np
 
 def dedither(img, fits_file:str):
     """Removes dithering from image.
@@ -26,7 +27,11 @@ def dedither(img, fits_file:str):
     y_shift = hdul[0].header['HIERARCH ESO INS3 POS4 POS'] 
     hdul.close()
 
-    shifted_img = scipy.ndimage.shift(img, [y_shift/2, x_shift])
+    # I have a feeling this could break if we're not dealing with cubes.
+    m = img.shape[0]
+    shifted_img = np.zeros_like(img)
+    for i in range(m):
+        shifted_img[i,:,:] = scipy.ndimage.shift(img[i,:,:], [y_shift/2, x_shift])
 
     # In Christian's IRDIS pipeline: 
     # x_shift = [1024-1]/2 - x_star - x_dith

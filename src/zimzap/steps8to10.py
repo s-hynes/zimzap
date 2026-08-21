@@ -38,7 +38,7 @@ def combine(save_dir:str, Callas_image, Bartoli_image):
     return images_combined
 
 # This function needs a more descriptive name
-def itsready(data_dir:str, save_dir:str, detector:str):
+def itsready(data_dir:str, save_dir:str, detector:str, centre_one_cycle:bool):
 
     #hdu_array = double_diff(data_dir, save_dir, detector)
     #Q_im, U_im, Int_Q, Int_U = hdu_array[0:4]
@@ -50,7 +50,7 @@ def itsready(data_dir:str, save_dir:str, detector:str):
     print(80*"#"+"\n")
     start_time_1_to_8 = time.monotonic()
 
-    Q_im, U_im, Int_Q, Int_U, Int_tot, Pol_int = double_diff(data_dir, save_dir, detector)
+    Q_im, U_im, Int_Q, Int_U, Int_tot, Pol_int = double_diff(data_dir, save_dir, detector, centre_one_cycle:bool)
 
     end_time_1_to_8 = time.monotonic()
     print("\n"+80*"#")
@@ -128,12 +128,12 @@ def itsready(data_dir:str, save_dir:str, detector:str):
 
     return Q_im_IPcorr, U_im_IPcorr, PolInt, Q_phi, U_phi
 
-def final_combination(data_dir:str):
+def final_combination(data_dir:str, centre_one_cycle:bool):
 
     raw_data_dir = os.path.join(os.getcwd(), "raw")
 
-    Callas_images = itsready(raw_data_dir, saving_dir, "Callas")
-    Bartoli_images = itsready(raw_data_dir, saving_dir, "Bartoli")
+    Callas_images = itsready(raw_data_dir, saving_dir, "Callas", centre_one_cycle)
+    Bartoli_images = itsready(raw_data_dir, saving_dir, "Bartoli", centre_one_cycle)
 
     print("\n"+80*"#")
     print(f"# Combining images from Callas and Bartoli "\

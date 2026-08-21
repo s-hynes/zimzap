@@ -41,7 +41,7 @@ def star_coords(image, x_dith=0, y_dith=0, print_coords=False):
     p_init = models.Gaussian2D(amplitude =maxval, x_mean=coords[1], y_mean=coords[0], x_stddev=4, y_stddev=4, theta=None)
     p = fitter(p_init, x, y, z)
 
-    star_x_coords_dithered = p.x_mean[0]
+    star_x_coords_dithered = p.x_mean[0] + 206
     star_y_coords_dithered = p.y_mean[0]
 
     if print_coords:
@@ -59,12 +59,27 @@ def centre_star(image, x_dith=0, y_dith=0, print_coords=False):
         x_coords, y_coords = star_coords(image[i,:,:], print_coords=print_coords)
 
         # Using location of most intensity in Gaussian fit to centre star.
-        x_shift = 511.5 - (x_coords + 206)
+        x_shift = 511.5 - x_coords
         y_shift = 255.5 - y_coords
         centred_star[i,:,:] = scipy.ndimage.shift(image[i,:,:], [y_shift, x_shift])
 
         # Debugging line, checking how much the star position changes
         # print(f"Star position: ({p.x_mean[0]+x_dith}, {p.y_mean[0]+y_dith/2})")
+    
+    return centred_star
+
+def centre_star_with_coordinates(image, star_coords:tuple, print_coords=False):
+
+    m = image.shape[0]
+    centred_star = np.zeros_like(image)
+    for i in range(m):
+
+        x_coords, y_coords = star_coords
+
+        # Using location of most intensity in Gaussian fit to centre star.
+        x_shift = 511.5 - x_coords
+        y_shift = 255.5 - y_coords
+        centred_star[i,:,:] = scipy.ndimage.shift(image[i,:,:], [y_shift, x_shift])
     
     return centred_star
 
@@ -87,7 +102,7 @@ def undither_and_centre(fits_file, image, star_coords,\
         #x_coords, y_coords = star_coords(image[i,:,:], print_coords=print_coords)
 
         # Using location of most intensity in Gaussian fit to centre star.
-        x_shift = 511.5 - (star_coords[0] + 206)
+        x_shift = 511.5 - star_coords[0]
         y_shift = 255.5 - star_coords[1]
         centred_star[i,:,:] = scipy.ndimage.shift(undithered_image[:,:], [y_shift, x_shift])
 

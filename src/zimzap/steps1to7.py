@@ -2,7 +2,7 @@
 from .step_01_double_phase_mode import double_phase_mode
 from .step_02_bias_subtraction import overscan
 from .step_03_separating_rows import separate_rows
-from .step_04_centring import centre_star, undither_and_centre, star_coords
+from .step_04_centring import *
 from .step_05_single_difference import single_diff_pol, intensity
 from .step_06_removing_dither import dedither
 from .step_07_binning_pixels import binning
@@ -13,7 +13,7 @@ from .inputs import save_fits, save_steps, saving_dir, dir_in_str
 import time
 
 def steps1to7(data_dir:str, file:str, save_dir:str, detector:str, Stokes, 
-              first_cycle:bool, time_and_log=False): 
+              first_cycle:bool, centre_one_cycle:bool, time_and_log=False): 
     """Performs steps 1 to 7 in the data reduction.""" 
 
     # Step 1: Double phase mode
@@ -53,12 +53,29 @@ def steps1to7(data_dir:str, file:str, save_dir:str, detector:str, Stokes,
 
     centring_start_time = time.monotonic()
 
-    if first_cycle:
-        ord_0_star_coords = star_coords(ord_0[0])
-        ext_0_star_coords = star_coords(ext_0[0])
-        ord_pi_star_coords = star_coords(ord_pi[0])
-        ext_pi_star_coords = star_coords(ext_pi[0])
-        
+    if centre_one_cycle:
+
+        ord_0   = dedither(ord_0, data_dir + "/" + file)
+        ext_0   = dedither(ext_0, data_dir + "/" + file)
+        ord_pi  = dedither(ord_pi, data_dir + "/" + file)
+        ext_pi  = dedither(ext_pi, data_dir + "/" + file)
+
+        if first_cycle:
+            ord_0_star_coords = star_coords(ord_0[0])
+            ext_0_star_coords = star_coords(ext_0[0])
+            ord_pi_star_coords = star_coords(ord_pi[0])
+            ext_pi_star_coords = star_coords(ext_pi[0])
+            
+            ord_0_centred   = centre_star_with_coordinates(ord_0, ord_0_star_coords)
+            ext_0_centred   = centre_star_with_coordinates(ext_0, ext_0_star_coords)
+            ord_pi_centred  = centre_star_with_coordinates(ord_pi, ord_pi_star_coords)
+            ext_pi_centred  = centre_star_with_coordinates(ext_pi, ext_pi_star_coords)
+        else:
+            ord_0_centred   = centre_star_with_coordinates(ord_0, ord_0_star_coords)
+            ext_0_centred   = centre_star_with_coordinates(ext_0, ext_0_star_coords)
+            ord_pi_centred  = centre_star_with_coordinates(ord_pi, ord_pi_star_coords)
+            ext_pi_centred  = centre_star_with_coordinates(ext_pi, ext_pi_star_coords)
+    else:
         ord_0_centred   = centre_star(ord_0)
         ext_0_centred   = centre_star(ext_0)
         ord_pi_centred  = centre_star(ord_pi)
