@@ -86,7 +86,8 @@ def run_pipeline():
     double_difference_type, \
     single_posang_north_up, \
     combination_method_polarization, \
-    combination_method_intensity \
+    combination_method_intensity, \
+    centre_one_cycle \
     = read_config_file(config_file_path)
 
     final_combination(raw_data_dir)
