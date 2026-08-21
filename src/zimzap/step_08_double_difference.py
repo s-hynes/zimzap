@@ -8,7 +8,7 @@ import time
 from datetime import timedelta
 from .inputs import save_fits, save_steps, saving_dir, dir_in_str
 
-def double_diff(data_dir:str, save_dir:str, detector:str, savesteps=False):
+def double_diff(data_dir:str, save_dir:str, detector:str):
     """Carries out the processing for double difference images.
     
     **Input parameters:**
@@ -19,9 +19,6 @@ def double_diff(data_dir:str, save_dir:str, detector:str, savesteps=False):
     reduction will be saved in
 
     `detector`: Name of the detector that the images are taken from.
-    
-    `savesteps`: Whether or not intermediate steps in the data reduction 
-    will be saved. Default value is `False`.
 
 
     **Outputs:**
@@ -59,35 +56,35 @@ def double_diff(data_dir:str, save_dir:str, detector:str, savesteps=False):
 
             if Stokes == "Qplus":
                 if Qplus == 0:
-                    Qplus_singdiff_cyc = steps1to7(data_dir, filename, save_dir, detector, Stokes)[0].reshape(1,512,512)
-                    Qplus_int_cyc = steps1to7(data_dir, filename, save_dir, detector, Stokes)[1].reshape(1,512,512)
+                    Qplus_singdiff_cyc = steps1to7(data_dir, filename, save_dir, detector, Stokes, first_cycle=False)[0].reshape(1,512,512)
+                    Qplus_int_cyc = steps1to7(data_dir, filename, save_dir, detector, Stokes, first_cycle=False)[1].reshape(1,512,512)
                 else:
-                    Qplus_singdiff_cyc  = np.append(Qplus_singdiff_cyc, steps1to7(data_dir, filename, save_dir, detector, Stokes)[0].reshape(1,512,512), axis=0)
-                    Qplus_int_cyc       = np.append(Qplus_int_cyc, steps1to7(data_dir, filename, save_dir, detector, Stokes)[1].reshape(1,512,512), axis=0)
+                    Qplus_singdiff_cyc  = np.append(Qplus_singdiff_cyc, steps1to7(data_dir, filename, save_dir, detector, Stokes, first_cycle=False)[0].reshape(1,512,512), axis=0)
+                    Qplus_int_cyc       = np.append(Qplus_int_cyc, steps1to7(data_dir, filename, save_dir, detector, Stokes, first_cycle=False)[1].reshape(1,512,512), axis=0)
                 Qplus += 1
             elif Stokes == "Qminus":
                 if Qminus == 0:
-                    Qminus_singdiff_cyc = steps1to7(data_dir, filename, save_dir, detector, Stokes)[0].reshape(1,512,512)
-                    Qminus_int_cyc      = steps1to7(data_dir, filename, save_dir, detector, Stokes)[1].reshape(1,512,512)
+                    Qminus_singdiff_cyc = steps1to7(data_dir, filename, save_dir, detector, Stokes, first_cycle=False)[0].reshape(1,512,512)
+                    Qminus_int_cyc      = steps1to7(data_dir, filename, save_dir, detector, Stokes, first_cycle=False)[1].reshape(1,512,512)
                 else: 
-                    Qminus_singdiff_cyc = np.append(Qminus_singdiff_cyc, steps1to7(data_dir, filename, save_dir, detector, Stokes)[0].reshape(1,512,512), axis=0)
-                    Qminus_int_cyc      = np.append(Qminus_int_cyc, steps1to7(data_dir, filename, save_dir, detector, Stokes)[1].reshape(1,512,512), axis=0)
+                    Qminus_singdiff_cyc = np.append(Qminus_singdiff_cyc, steps1to7(data_dir, filename, save_dir, detector, Stokes, first_cycle=False)[0].reshape(1,512,512), axis=0)
+                    Qminus_int_cyc      = np.append(Qminus_int_cyc, steps1to7(data_dir, filename, save_dir, detector, Stokes, first_cycle=False)[1].reshape(1,512,512), axis=0)
                 Qminus += 1              
             elif Stokes == "Uplus":
                 if Uplus == 0:
-                    Uplus_singdiff_cyc  = steps1to7(data_dir, filename, save_dir, detector, Stokes)[0].reshape(1,512,512)
-                    Uplus_int_cyc       = steps1to7(data_dir, filename, save_dir, detector, Stokes)[1].reshape(1,512,512)
+                    Uplus_singdiff_cyc  = steps1to7(data_dir, filename, save_dir, detector, Stokes, first_cycle=False)[0].reshape(1,512,512)
+                    Uplus_int_cyc       = steps1to7(data_dir, filename, save_dir, detector, Stokes, first_cycle=False)[1].reshape(1,512,512)
                 else:
-                    Uplus_singdiff_cyc  = np.append(Uplus_singdiff_cyc, steps1to7(data_dir, filename, save_dir, detector, Stokes)[0].reshape(1,512,512), axis=0)
-                    Uplus_int_cyc       = np.append(Uplus_int_cyc, steps1to7(data_dir, filename, save_dir, detector, Stokes)[1].reshape(1,512,512), axis=0)  
+                    Uplus_singdiff_cyc  = np.append(Uplus_singdiff_cyc, steps1to7(data_dir, filename, save_dir, detector, Stokes, first_cycle=False)[0].reshape(1,512,512), axis=0)
+                    Uplus_int_cyc       = np.append(Uplus_int_cyc, steps1to7(data_dir, filename, save_dir, detector, Stokes, first_cycle=False)[1].reshape(1,512,512), axis=0)  
                 Uplus += 1
             elif Stokes == "Uminus":
                 if Uminus == 0:
-                    Uminus_singdiff_cyc = steps1to7(data_dir, filename, save_dir, detector, Stokes)[0].reshape(1,512,512)
-                    Uminus_int_cyc      = steps1to7(data_dir, filename, save_dir, detector, Stokes)[1].reshape(1,512,512)
+                    Uminus_singdiff_cyc = steps1to7(data_dir, filename, save_dir, detector, Stokes, first_cycle=False)[0].reshape(1,512,512)
+                    Uminus_int_cyc      = steps1to7(data_dir, filename, save_dir, detector, Stokes, first_cycle=False)[1].reshape(1,512,512)
                 else:
-                    Uminus_singdiff_cyc = np.append(Uminus_singdiff_cyc, steps1to7(data_dir, filename, save_dir, detector, Stokes)[0].reshape(1,512,512), axis=0)
-                    Uminus_int_cyc      = np.append(Uminus_int_cyc, steps1to7(data_dir, filename, save_dir, detector, Stokes)[1].reshape(1,512,512), axis=0)
+                    Uminus_singdiff_cyc = np.append(Uminus_singdiff_cyc, steps1to7(data_dir, filename, save_dir, detector, Stokes, first_cycle=False)[0].reshape(1,512,512), axis=0)
+                    Uminus_int_cyc      = np.append(Uminus_int_cyc, steps1to7(data_dir, filename, save_dir, detector, Stokes, first_cycle=False)[1].reshape(1,512,512), axis=0)
                 Uminus += 1
 
             """There's one slight problem with this if statement: It doesn't 
@@ -158,7 +155,7 @@ if __name__=="__main__":
     start_time = time.monotonic()
     print("\nScript started at: ", time.ctime())
 
-    double_diff(data_dir, save_dir, "Callas", savesteps=save_steps)
+    double_diff(data_dir, save_dir, "Callas")
 
     end_time = time.monotonic()
     print("\nTime taken: ", timedelta(seconds=end_time - start_time))

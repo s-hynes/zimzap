@@ -28,7 +28,7 @@ def check_directories():
 # Radii for manual IP correction annulus
 r_in, r_out = 6, 7.5
 
-def combine(save_dir:str, Callas_image, Bartoli_image, savesteps=False):
+def combine(save_dir:str, Callas_image, Bartoli_image):
 
     Callas_image_rotated = np.rot90(Callas_image, k=3).reshape(1,512,512)
     Bartoli_image = Bartoli_image.reshape(1,512,512)
@@ -38,9 +38,9 @@ def combine(save_dir:str, Callas_image, Bartoli_image, savesteps=False):
     return images_combined
 
 # This function needs a more descriptive name
-def itsready(data_dir:str, save_dir:str, detector:str, savesteps=False):
+def itsready(data_dir:str, save_dir:str, detector:str):
 
-    #hdu_array = double_diff(data_dir, save_dir, detector, savesteps=save_steps)
+    #hdu_array = double_diff(data_dir, save_dir, detector)
     #Q_im, U_im, Int_Q, Int_U = hdu_array[0:4]
 
     print("\n"+80*"#")
@@ -50,7 +50,7 @@ def itsready(data_dir:str, save_dir:str, detector:str, savesteps=False):
     print(80*"#"+"\n")
     start_time_1_to_8 = time.monotonic()
 
-    Q_im, U_im, Int_Q, Int_U, Int_tot, Pol_int = double_diff(data_dir, save_dir, detector, savesteps=save_steps)
+    Q_im, U_im, Int_Q, Int_U, Int_tot, Pol_int = double_diff(data_dir, save_dir, detector)
 
     end_time_1_to_8 = time.monotonic()
     print("\n"+80*"#")
@@ -128,12 +128,12 @@ def itsready(data_dir:str, save_dir:str, detector:str, savesteps=False):
 
     return Q_im_IPcorr, U_im_IPcorr, PolInt, Q_phi, U_phi
 
-def final_combination(data_dir:str, savesteps=False):
+def final_combination(data_dir:str):
 
     raw_data_dir = os.path.join(os.getcwd(), "raw")
 
-    Callas_images = itsready(raw_data_dir, saving_dir, "Callas", savesteps=save_steps)
-    Bartoli_images = itsready(raw_data_dir, saving_dir, "Bartoli", savesteps=save_steps)
+    Callas_images = itsready(raw_data_dir, saving_dir, "Callas")
+    Bartoli_images = itsready(raw_data_dir, saving_dir, "Bartoli")
 
     print("\n"+80*"#")
     print(f"# Combining images from Callas and Bartoli "\
@@ -141,11 +141,11 @@ def final_combination(data_dir:str, savesteps=False):
     print(80*"#")
     start_time_comb = time.monotonic()
 
-    Q_IP_corr_combined = combine(saving_dir, Callas_images[0], Bartoli_images[0], savesteps=save_steps)
-    U_IP_corr_combined = combine(saving_dir, Callas_images[1], Bartoli_images[1], savesteps=save_steps)
-    PolInt_combined = combine(saving_dir, Callas_images[2], Bartoli_images[2], savesteps=save_steps)
-    Q_phi_combined = combine(saving_dir, Callas_images[3], Bartoli_images[3], savesteps=save_steps)
-    U_phi_combined = combine(saving_dir, Callas_images[4], Bartoli_images[4], savesteps=save_steps)
+    Q_IP_corr_combined = combine(saving_dir, Callas_images[0], Bartoli_images[0])
+    U_IP_corr_combined = combine(saving_dir, Callas_images[1], Bartoli_images[1])
+    PolInt_combined = combine(saving_dir, Callas_images[2], Bartoli_images[2])
+    Q_phi_combined = combine(saving_dir, Callas_images[3], Bartoli_images[3])
+    U_phi_combined = combine(saving_dir, Callas_images[4], Bartoli_images[4])
 
     end_time_comb = time.monotonic()
     print("\n"+80*"#")
