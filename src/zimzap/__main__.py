@@ -90,7 +90,7 @@ def run_pipeline():
     centre_one_cycle \
     = read_config_file(config_file_path)
 
-    final_combination(raw_data_dir)
+    final_combination(raw_data_dir, centre_one_cycle=centre_one_cycle)
     os.remove(file_copy_path)
 
     end_time = time.monotonic()
